@@ -5,11 +5,13 @@ const app = express(),
       port = 3080;
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://localhost:27017/mapMakerDatabase';
+const cors = require("cors");
 let dbClient;
 
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../my-app/out')));
+app.use(cors());
 
 app.get('/', (req,res) => {
     res.statusCode = 200
@@ -32,6 +34,14 @@ app.get('/maps', (req,res) => {
         res.json(result);
     });
 });
+
+app.post('maps', (req,res) => {
+    console.log("here boyyyyy")
+    dbClient.collection('map').insertOne({name: req.body.name}, (err, result) => {
+        console.log('map added to database');
+    });
+});
+
 
 app.listen(port, () => {
     MongoClient.connect(url, function(err, client) {

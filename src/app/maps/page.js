@@ -1,3 +1,11 @@
+import NewMapForm from "./components/newMapForm"
+
 export default function Page() {
-    return <div>maps</div>
+    
+
+    return (
+        <div>
+            <NewMapForm />
+        </div>
+    )
 }
